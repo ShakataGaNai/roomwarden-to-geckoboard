@@ -1,7 +1,6 @@
 var Geckoboard = require('geckoboard-push');
 var config = require('./config.js');
 var geck = new Geckoboard({api_key: config.GeckoAPIKey});
-//var list = geck.list(config.GeckoWidget);
 var gText = geck.text(config.GeckoWidget);
 
 // Prep var
@@ -34,7 +33,6 @@ function buildItems(out){
     // Build the variable/JSON for output
     items = '<font size="-1">';
 	out['item'].forEach(function(line) {
-		//console.log(line['text']);
         if(line['value'] == 'open'){var color = "#00FF00";}else{var color = "#FF0000";}
         items += '<div style="background-color:'+color+'; color: #FFFFFF;">'+line['value']+' -- '+line['text']+'</div>';
         items += '<div> Since '+line['timeago']+'</div><br>'+"\n";
@@ -46,15 +44,19 @@ function buildItems(out){
 
 function sendIt(){
     // Send the data to Geckoboard
-    //console.log(items2);
-	gText.send(items2, function(err, res2){
-        if(res2['success'] == true){
-            // We're done here! Wait for 45 seconds
-            console.log('sendIt - OK');
-            setTimeout(room,45000);
+	gText.send(items2, function(err2, res2){
+        if(!err2){
+            if(res2['success'] == true){
+                // We're done here! Wait for 45 seconds
+                console.log('sendIt - OK');
+                setTimeout(room,45000);
+            }else{
+                // Didn't work, wait and try again
+                console.log(res2);
+                setTimeout(sendIt,5000);
+            }
         }else{
-            // Didn't work, wait and try again
-            console.log(res2);
+            console.log(err2);
             setTimeout(sendIt,5000);
         }
 	});
@@ -76,5 +78,5 @@ function getDateTime() {
     return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
 }
 
-//EXECUTE!
+//Starts the loop the first time
 room();
