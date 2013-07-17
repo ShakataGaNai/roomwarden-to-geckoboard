@@ -1,7 +1,8 @@
 var Geckoboard = require('geckoboard-push');
 var config = require('./config.js');
 var geck = new Geckoboard({api_key: config.GeckoAPIKey});
-var list = geck.list(config.GeckoWidget);
+//var list = geck.list(config.GeckoWidget);
+var gText = geck.text(config.GeckoWidget);
 
 // Prep var
 var items = [];
@@ -48,30 +49,4 @@ console.log(items);
 	});
 
 }
-
-/*var items = [
-    {
-        "label": {
-            "name": "OCCUPIED",
-            "color": "#FF0000"
-        },
-        "title": {
-            "text": "ROOM NAME ALPHA",
-            "highlight": true
-        },
-        "description": "SINCE 14 SECONDS AGO"
-    },
-    {
-        "label": {
-            "name": "FREE",
-            "color": "#00FF00"
-        },
-        "title": {
-            "text": "ROOM NAME BRAVO",
-            "highlight": false
-        },
-        "description": "SINCE 1 HOURS AGO"
-    }
-];
-console.log(items); */
 

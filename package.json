@@ -1,0 +1,20 @@
+{
+  "name" : "roomwarden-to-geckoboard",
+  "description" : "Moves Roomwarden data to Geckboard",
+  "homepage" : "https://github.com/ShakataGaNai/roomwarden-to-geckoboard",
+  "keywords" : ["util", "server","geckoboard","roomwarden"],
+  "author" : "Jon Davis <jon@snowulf.com>",
+  "contributors" : [],
+  "dependencies" : {
+    "geckoboard-push": "0.0.6"
+  },
+  "repository" : {"type": "git", "url": "https://github.com/ShakataGaNai/roomwarden-to-geckoboard.git"},
+  "main" : "app.js",
+  "version" : "1.0.0",
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "start": "node app"
+  }
+}
