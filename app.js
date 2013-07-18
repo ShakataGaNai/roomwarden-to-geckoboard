@@ -9,6 +9,7 @@ var items2;
 
 
 function room(){
+    clearTimeout(room);
     // Make a request to roomwarden API
     console.log('This is Red Five; I\'m going in! '+getDateTime());
 
@@ -16,9 +17,9 @@ function room(){
     	uri:config.RoomwardenURL,
     	headers:{'Accept':'application/json','Content-type':'application/json'},
     	},function (err,res,body){
-    		var out = JSON.parse(body);
     		console.log('config.RoomwardenURL = ' + res.statusCode);
             if(res.statusCode == 200){
+    		var out = JSON.parse(body);
                 //It worked, move on
                 buildItems(out);
             }else{
@@ -44,21 +45,21 @@ function buildItems(out){
 
 function sendIt(){
     // Send the data to Geckoboard
+	clearTimeout(sendIt);
+    //console.log(items2);
 	gText.send(items2, function(err2, res2){
-        if(!err2){
+	  try{
             if(res2['success'] == true){
                 // We're done here! Wait for 45 seconds
                 console.log('sendIt - OK');
                 setTimeout(room,45000);
-            }else{
+            }
+	  }catch(e){
                 // Didn't work, wait and try again
+		console.log('sendIt - tripped try/catch');
                 console.log(res2);
                 setTimeout(sendIt,5000);
-            }
-        }else{
-            console.log(err2);
-            setTimeout(sendIt,5000);
-        }
+          }
 	});
 }
 
